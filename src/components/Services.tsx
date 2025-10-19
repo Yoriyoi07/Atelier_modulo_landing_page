@@ -1,4 +1,5 @@
-import { motion } from "motion/react";
+import { motion, useAnimate } from "motion/react";
+import { useRef } from "react";
 import { Ruler, Hammer, Package, TrendingUp, Users, Target } from "lucide-react";
 
 const services = [
@@ -102,66 +103,93 @@ export function Services() {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                whileHover={{ y: -8 }}
-                className="bg-white border-2 border-black/5 p-8 rounded-sm hover:border-black/20 hover:shadow-xl transition-all duration-300 group"
-              >
-                <motion.div
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                  className="mb-6"
-                >
-                  <Icon className="h-12 w-12 text-black" />
-                </motion.div>
-                
-                <motion.h3 
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.15 + 0.2 }}
-                  className="mb-4 text-2xl"
-                >
-                  {service.title}
-                </motion.h3>
-                
-                <motion.p 
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 0.7 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.15 + 0.3 }}
-                  className="text-sm leading-relaxed mb-6 opacity-70"
-                >
-                  {service.description}
-                </motion.p>
-                
-                <ul className="space-y-3">
-                  {service.features.map((feature, idx) => (
-                    <motion.li 
-                      key={idx} 
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 0.8, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: index * 0.15 + 0.4 + idx * 0.1 }}
-                      className="text-sm opacity-80 flex items-center gap-2"
-                    >
-                      <div className="w-1.5 h-1.5 bg-black rounded-full" />
-                      {feature}
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            );
-          })}
+          {services.map((service, index) => (
+            <ServiceCard key={index} service={service} index={index} />
+          ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function ServiceCard({
+  service,
+  index,
+}: {
+  service: (typeof services)[number];
+  index: number;
+}) {
+  const Icon = service.icon;
+  const [scope, animate] = useAnimate();
+  const animatingRef = useRef(false);
+
+  const handleHoverStart = async () => {
+    if (animatingRef.current) return;
+    animatingRef.current = true;
+    // Single full spin, then snap back to 0 to avoid reverse tweening
+    await animate(
+      scope.current,
+      { rotate: [0, 360] },
+      { duration: 0.6 },
+    );
+    // Reset instantly so the next hover can spin again without backtracking
+    await animate(scope.current, { rotate: 0 }, { duration: 0 });
+    animatingRef.current = false;
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.6, delay: index * 0.15 }}
+      whileHover={{ y: -8 }}
+      className="bg-white border-2 border-black/5 p-8 rounded-sm hover:border-black/20 hover:shadow-xl transition-all duration-300 group"
+    >
+      <motion.div
+        ref={scope}
+        onHoverStart={handleHoverStart}
+        whileHover={{ scale: 1.1 }}
+        className="mb-6"
+      >
+        <Icon className="h-12 w-12 text-black" />
+      </motion.div>
+
+      <motion.h3
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 3, delay: index * 0.15 + 0.2 }}
+        className="mb-4 text-2xl"
+      >
+        {service.title}
+      </motion.h3>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.7 }}
+        viewport={{ once: true }}
+        transition={{ duration: 3, delay: index * 0.15 + 0.3 }}
+        className="text-sm leading-relaxed mb-6 opacity-70"
+      >
+        {service.description}
+      </motion.p>
+
+      <ul className="space-y-3">
+        {service.features.map((feature, idx) => (
+          <motion.li
+            key={idx}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 0.8, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 3, delay: index * 0.15 + 0.4 + idx * 0.1 }}
+            className="text-sm opacity-80 flex items-center gap-2"
+          >
+            <div className="w-1.5 h-1.5 bg-black rounded-full" />
+            {feature}
+          </motion.li>
+        ))}
+      </ul>
+    </motion.div>
   );
 }

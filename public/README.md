@@ -1,6 +1,9 @@
 Place static assets here.
 
-- The hero image is expected at `/hero.jpg`.
-- You can replace it by saving your desired image file as `e:/Am_website/public/hero.jpg` (Windows path) or `public/hero.jpg` relative to the project root.
+- Hero image is expected at `/hero.jpg`.
+	- Save your image as `e:/Am_website/public/hero.jpg` or `public/hero.jpg`.
+- Favicon / app icons:
+	- Save your logo as `public/favicon.png` (recommended 512x512 or at least 192x192 PNG with transparent background).
+	- Optionally add `public/apple-touch-icon.png` for iOS home screen icons (180x180).
 
-Vite will serve everything in this folder at the site root `/`.
+Vite serves everything in this folder at the site root `/`.
