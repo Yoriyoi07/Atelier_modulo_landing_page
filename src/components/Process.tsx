@@ -125,12 +125,19 @@ export function Process() {
 
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 0.7, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-center mt-12 md:mt-20 text-sm opacity-70"
+          className="mt-12 md:mt-20"
         >
-          Simple. Transparent. End-to-end.
+          <div className="w-fit mx-auto rounded-sm border border-black/10 bg-white/70 backdrop-blur-sm px-1 py-4 md:px-1.5 md:py-5 text-center shadow-sm">
+            <p
+              className="inline whitespace-nowrap text-sm md:text-base tracking-wide text-black/80"
+              style={{ textShadow: "0 2px 6px rgba(0,0,0,0.35)" }}
+            >
+              Simple. Transparent. End-to-end.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
