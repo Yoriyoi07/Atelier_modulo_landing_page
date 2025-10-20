@@ -1,4 +1,5 @@
-import { motion } from "motion/react";
+import { motion, useAnimate } from "motion/react";
+import { useRef } from "react";
 import { Ruler, Hammer, Package, TrendingUp, Users, Target } from "lucide-react";
 
 const services = [
@@ -83,13 +84,7 @@ export function Services() {
                 whileHover={{ y: -8 }}
                 className="bg-white border-2 border-black/5 p-6 md:p-8 rounded-sm hover:border-black/20 hover:shadow-xl transition-all duration-300 group"
               >
-                <motion.div
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                  className="mb-4 md:mb-6"
-                >
-                  <Icon className="h-10 w-10 md:h-12 md:w-12 text-black" />
-                </motion.div>
+                <SpinOnceIcon Icon={Icon} />
                 
                 <motion.h3 
                   initial={{ opacity: 0, x: -20 }}
@@ -132,5 +127,31 @@ export function Services() {
         </div>
       </div>
     </section>
+  );
+}
+
+function SpinOnceIcon({ Icon }: { Icon: React.ElementType }) {
+  const [scope, animate] = useAnimate();
+  const spinning = useRef(false);
+
+  const onHoverStart = async () => {
+    if (spinning.current) return;
+    spinning.current = true;
+    // One full rotation, then snap back to 0 so the next hover starts fresh
+    await animate(scope.current, { rotate: [0, 360] }, { duration: 1.2, ease: "linear" });
+    await animate(scope.current, { rotate: 0 }, { duration: 0 });
+    spinning.current = false;
+  };
+
+  return (
+    <motion.div
+      ref={scope}
+      onHoverStart={onHoverStart}
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.3 }}
+      className="mb-4 md:mb-6"
+    >
+      <Icon className="h-10 w-10 md:h-12 md:w-12 text-black" />
+    </motion.div>
   );
 }
