@@ -6,25 +6,25 @@ const steps = [
     number: "01",
     icon: MessageCircle,
     title: "Consultation",
-    description: "We start by understanding your goals, preferences, and requirements."
+    description: "We begin with an in-depth conversation to understand your vision, lifestyle, aesthetic preferences, and functional requirements. This phase includes site analysis, budget discussion, and timeline establishment to ensure alignment from the start."
   },
   {
     number: "02",
     icon: Lightbulb,
     title: "Concept & Design",
-    description: "We develop detailed plans, visuals, and materials that align with your vision."
+    description: "Our design team develops comprehensive architectural and interior design solutions tailored to your vision. We create detailed drawings, 3D renderings, and material specifications that bring clarity and confidence to the project ahead."
   },
   {
     number: "03",
     icon: HardHat,
     title: "Construction",
-    description: "Our build team turns designs into reality with efficiency and quality control."
+    description: "Our experienced build team transforms designs into reality with meticulous attention to detail. We manage all construction aspects, coordinate with skilled craftsmen, and maintain rigorous quality control to ensure exceptional results."
   },
   {
     number: "04",
     icon: Key,
     title: "Turnover",
-    description: "We deliver your finished space, ready for use."
+    description: "We conduct thorough inspections, final styling, and detailed walkthroughs to ensure every element meets our high standards. Your space is delivered complete, polished, and ready to enjoy with full documentation and support."
   }
 ];
 
