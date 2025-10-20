@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "./ui/dialog";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useState, useEffect, MouseEvent } from "react";
+import { ChevronLeft, ChevronRight, X, Info } from "lucide-react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface ProjectModalProps {
@@ -20,6 +20,7 @@ interface ProjectModalProps {
 
 export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -36,11 +37,11 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
   if (!project) return null;
 
   const nextImage = () => {
-    setCurrentImageIndex((prev: number) => (prev + 1) % project.images.length);
+    setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev: number) => (prev - 1 + project.images.length) % project.images.length);
+    setCurrentImageIndex((prev) => (prev - 1 + project.images.length) % project.images.length);
   };
 
   return (
@@ -60,9 +61,23 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
             onClick={onClose}
-            className="fixed top-8 right-8 z-50 w-14 h-14 rounded-full bg-white text-black hover:bg-white/90 transition-all flex items-center justify-center shadow-xl hover:scale-110"
+            className="fixed top-4 right-4 md:top-8 md:right-8 z-50 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white text-black hover:bg-white/90 transition-all flex items-center justify-center shadow-xl hover:scale-110"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5 md:w-6 md:h-6" />
+          </motion.button>
+
+          {/* Mobile Info Toggle Button */}
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowInfo(!showInfo);
+            }}
+            className="md:hidden fixed top-4 left-4 z-50 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm text-white border border-white/20 transition-all flex items-center justify-center"
+          >
+            <Info className="w-5 h-5" />
           </motion.button>
 
           {/* Main Content */}
@@ -71,11 +86,11 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="w-full h-full flex"
-            onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+            className="w-full h-full flex flex-col md:flex-row"
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Left Panel - Image Gallery */}
-            <div className="flex-1 relative flex items-center justify-center px-20">
+            {/* Image Gallery - Full screen on mobile, left panel on desktop */}
+            <div className="flex-1 relative flex items-center justify-center px-4 md:px-20 py-20 md:py-0">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentImageIndex}
@@ -83,7 +98,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                   animate={{ opacity: 1, scale: 1, x: 0 }}
                   exit={{ opacity: 0, scale: 0.9, x: -100 }}
                   transition={{ duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
-                  className="w-full h-[80vh] relative"
+                  className="w-full h-[50vh] md:h-[80vh] relative"
                 >
                   <ImageWithFallback
                     src={project.images[currentImageIndex]}
@@ -103,9 +118,9 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={prevImage}
-                    className="absolute left-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors flex items-center justify-center border border-white/20"
+                    className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors flex items-center justify-center border border-white/20"
                   >
-                    <ChevronLeft className="w-6 h-6 text-white" />
+                    <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
                   </motion.button>
                   <motion.button
                     initial={{ opacity: 0, x: 20 }}
@@ -114,9 +129,9 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={nextImage}
-                    className="absolute right-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors flex items-center justify-center border border-white/20"
+                    className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors flex items-center justify-center border border-white/20"
                   >
-                    <ChevronRight className="w-6 h-6 text-white" />
+                    <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
                   </motion.button>
                 </>
               )}
@@ -126,36 +141,42 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm text-white border border-white/20"
+                className="absolute bottom-20 md:bottom-8 left-1/2 -translate-x-1/2 px-4 md:px-6 py-2 md:py-3 rounded-full bg-white/10 backdrop-blur-sm text-white border border-white/20"
               >
-                <span className="text-sm">{currentImageIndex + 1} / {project.images.length}</span>
+                <span className="text-xs md:text-sm">{currentImageIndex + 1} / {project.images.length}</span>
               </motion.div>
             </div>
 
-            {/* Right Panel - Project Details */}
+            {/* Project Details - Bottom sheet on mobile, right panel on desktop */}
             <motion.div
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 0, y: 100 }}
+              animate={{ 
+                opacity: showInfo || window.innerWidth >= 768 ? 1 : 0, 
+                x: window.innerWidth >= 768 ? 0 : 0,
+                y: showInfo || window.innerWidth >= 768 ? 0 : 100
+              }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="w-[450px] bg-white p-12 overflow-y-auto"
+              className={`${
+                showInfo ? 'block' : 'hidden'
+              } md:block absolute md:relative bottom-0 left-0 right-0 md:w-[450px] bg-white p-6 md:p-12 overflow-y-auto max-h-[50vh] md:max-h-full rounded-t-3xl md:rounded-none`}
             >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="mb-8"
+                className="mb-6 md:mb-8"
               >
                 <div className="text-xs tracking-wide opacity-60 mb-2">{project.category}</div>
-                <h2 className="text-3xl mb-4">{project.title}</h2>
+                <h2 className="text-2xl md:text-3xl mb-3 md:mb-4">{project.title}</h2>
                 <p className="text-sm leading-relaxed opacity-70">{project.description}</p>
               </motion.div>
 
-              <div className="space-y-6 mb-12">
+              <div className="space-y-4 md:space-y-6 mb-8 md:mb-12">
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="border-t border-black/10 pt-6"
+                  className="border-t border-black/10 pt-4 md:pt-6"
                 >
                   <div className="text-xs tracking-wide opacity-60 mb-2">LOCATION</div>
                   <div className="text-sm">{project.location}</div>
@@ -165,7 +186,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
-                  className="border-t border-black/10 pt-6"
+                  className="border-t border-black/10 pt-4 md:pt-6"
                 >
                   <div className="text-xs tracking-wide opacity-60 mb-2">YEAR</div>
                   <div className="text-sm">{project.year}</div>
@@ -175,7 +196,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7 }}
-                  className="border-t border-black/10 pt-6"
+                  className="border-t border-black/10 pt-4 md:pt-6"
                 >
                   <div className="text-xs tracking-wide opacity-60 mb-2">AREA</div>
                   <div className="text-sm">{project.area}</div>
@@ -189,7 +210,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                 transition={{ delay: 0.8 }}
               >
                 <div className="text-xs tracking-wide opacity-60 mb-4">ALL IMAGES</div>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-2 md:gap-3">
                   {project.images.map((image, index) => (
                     <motion.button
                       key={index}
