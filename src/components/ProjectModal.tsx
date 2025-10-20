@@ -102,7 +102,9 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                 >
                   <ImageWithFallback
                     src={project.images[currentImageIndex]}
+                    srcList={project.images}
                     alt={`${project.title} - Image ${currentImageIndex + 1}`}
+                    loading="lazy"
                     className="w-full h-full object-contain"
                   />
                 </motion.div>
@@ -228,7 +230,9 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
                     >
                       <ImageWithFallback
                         src={image}
+                        srcList={project.images}
                         alt={`Thumbnail ${index + 1}`}
+                        loading="lazy"
                         className="w-full h-full object-cover"
                       />
                     </motion.button>

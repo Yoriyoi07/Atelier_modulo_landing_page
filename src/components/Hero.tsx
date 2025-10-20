@@ -119,11 +119,13 @@ export function Hero() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="w-full h-full relative"
               >
-                <ImageWithFallback
-                  src="Hero.png"
-                  alt="Modern architecture"
-                  className="w-full h-full object-cover"
-                />
+                          <ImageWithFallback
+                            src="Hero.png"
+                            srcList={["/Hero.png", "Hero.png"]}
+                            alt="Modern architecture"
+                            loading="lazy"
+                            className="w-full h-full object-cover"
+                          />
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               </motion.div>

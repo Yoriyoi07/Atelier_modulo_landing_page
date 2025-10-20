@@ -27,7 +27,7 @@ export function Navigation() {
             className="cursor-pointer" 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            <img src={logoFull} alt="Atelier Modulo" className="h-10 md:h-12" />
+            <img src="AM_LOGO_2.png" alt="Atelier Modulo" className="h-10 md:h-12" />
           </motion.div>
           
           {/* Desktop Navigation */}

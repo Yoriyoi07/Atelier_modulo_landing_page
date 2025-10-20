@@ -92,8 +92,10 @@ export function About() {
               className="w-full h-full"
             >
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcmNoaXRlY3R1cmUlMjBzdHVkaW98ZW58MXx8fHwxNzYwODQzNzI3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                src="About_photo.jpg"
+                srcList={["/About_photo.jpg", "About_photo.jpg"]}
                 alt="Architecture studio"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </motion.div>
