@@ -2,7 +2,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { ProjectModal } from "./ProjectModal";
 import { useState } from "react";
 import { motion } from "motion/react";
-// Sample project data
+// Sample project data1
 const projects = [
   {
     title: "GRAZIER DESIGN",
