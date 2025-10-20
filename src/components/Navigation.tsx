@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Facebook, Instagram } from "lucide-react";
 import { useState } from "react";
-import logoFull from "figma:asset/d17356add9c0520aa2882cc176a1d2d940625d65.png";
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -78,9 +77,26 @@ export function Navigation() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="hidden lg:block text-sm"
+            className="hidden md:flex items-center gap-3"
           >
-            +63 927 955 4306
+            <a
+              href="https://www.facebook.com/profile.php?id=61573575914568" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Visit our Facebook"
+              className="p-2 rounded-full hover:bg-black/5 transition-colors"
+            >
+              <Facebook className="w-5 h-5" />
+            </a>
+            <a
+              href="https://www.instagram.com/atelier.modulo/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Visit our Instagram"
+              className="p-2 rounded-full hover:bg-black/5 transition-colors"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
           </motion.div>
 
           {/* Mobile Menu Button */}
@@ -147,9 +163,26 @@ export function Navigation() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="pt-6 text-sm text-center text-neutral-600"
+                className="pt-6 flex items-center justify-center gap-8"
               >
-                +63 927 955 4306
+                <a
+                  href="https://www.facebook.com/profile.php?id=61573575914568"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visit our Facebook"
+                  className="w-14 h-14 flex items-center justify-center rounded-full bg-black text-white hover:bg-black/80 transition-colors"
+                >
+                  <Facebook className="w-7 h-7" />
+                </a>
+                <a
+                  href="https://www.instagram.com/atelier.modulo/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visit our Instagram"
+                  className="w-14 h-14 flex items-center justify-center rounded-full bg-black text-white hover:bg-black/80 transition-colors"
+                >
+                  <Instagram className="w-7 h-7" />
+                </a>
               </motion.div>
             </div>
           </motion.div>
