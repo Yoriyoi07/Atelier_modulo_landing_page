@@ -5,7 +5,9 @@ import logoWhite from "figma:asset/7d5a43cf187b67f50b93e08684f5b7cfbea2a468.png"
 export function Contact() {
   return (
     <section id="contact" className="bg-black text-white py-20 md:py-32 relative overflow-hidden">
-      {/* Decorative elements */}
+     {
+      // -- IGNORE --
+     }
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full blur-[100px]" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-white rounded-full blur-[100px]" />
